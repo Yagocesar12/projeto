@@ -128,7 +128,7 @@ export default function ConfigPage() {
         body: JSON.stringify({
           key: keyValue,
           server_id: selectedServer.id,
-          port: 7771,
+          port: 10025,
         }),
       })
       const data = await res.json()

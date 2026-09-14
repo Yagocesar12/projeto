@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     // Get server config
     let serverHost = process.env.PROXY_DEFAULT_HOST || '0.0.0.0'
-    let serverPort = port || 7771
+    let serverPort = port || 10025
 
     if (server_id) {
       const { data: server } = await supabase
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
         serverHost = server.host
         if (server.ports && typeof server.ports === 'object') {
           const ports = server.ports as Record<string, number>
-          serverPort = ports[String(port)] || Object.values(ports)[0] || 7771
+          serverPort = ports[String(port)] || Object.values(ports)[0] || 10025
         }
       }
     }

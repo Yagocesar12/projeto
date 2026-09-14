@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS proxy_servers (
   name TEXT NOT NULL,
   region TEXT NOT NULL DEFAULT 'br',
   host TEXT NOT NULL,
-  ports JSONB NOT NULL DEFAULT '{"7771": 7771, "7772": 7772, "7773": 7773, "7774": 7774}',
+  ports JSONB NOT NULL DEFAULT '{"10025": 10025, "10024": 10024, "10023": 10023}',
   is_active BOOLEAN NOT NULL DEFAULT true,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -43,7 +43,7 @@ CREATE INDEX IF NOT EXISTS idx_proxy_servers_active ON proxy_servers(is_active) 
 
 -- Seed a default server (replace with your VPS IP)
 INSERT INTO proxy_servers (id, name, region, host, ports, sort_order)
-VALUES ('br', 'Brazil', 'br', '0.0.0.0', '{"7771": 7771, "7772": 7772, "7773": 7773, "7774": 7774}', 1)
+VALUES ('br', 'Brazil', 'br', '0.0.0.0', '{"10025": 10025, "10024": 10024, "10023": 10023}', 1)
 ON CONFLICT (id) DO NOTHING;
 
 -- RLS policies

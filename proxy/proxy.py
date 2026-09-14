@@ -27,10 +27,9 @@ PANEL_API_URL = os.environ.get("PANEL_API_URL", "https://your-panel.vercel.app")
 API_TIMEOUT = int(os.environ.get("API_TIMEOUT", "5"))
 
 PROXY_PORTS = {
-    7771: {"name": "Aim Drag", "folder": "game_patches/Aim Drag 7771"},
-    7772: {"name": "Aim Neck", "folder": "game_patches/Aim Neck 7772"},
-    7773: {"name": "Aim Body", "folder": "game_patches/Aim Body 7773"},
-    7774: {"name": "Aim Drag Top", "folder": "game_patches/Aim Drag Top 7774"},
+    10025: {"name": "Aim Drag", "folder": "game_patches/Aim Drag 7771"},
+    10024: {"name": "Aim Neck", "folder": "game_patches/Aim Neck 7772"},
+    10023: {"name": "Aim Body", "folder": "game_patches/Aim Body 7773"},
 }
 
 # ─── IP VALIDATION CACHE ────────────────────────────────────────────────────
@@ -43,11 +42,11 @@ def get_current_port() -> int:
     try:
         return ctx.options.listen_port
     except Exception:
-        return int(os.environ.get("PROXY_PORT", "7771"))
+        return int(os.environ.get("PROXY_PORT", "10025"))
 
 def get_patch_dir() -> Path:
     port = get_current_port()
-    config = PROXY_PORTS.get(port, PROXY_PORTS[7771])
+    config = PROXY_PORTS.get(port, PROXY_PORTS[10025])
     return ROOT / config["folder"]
 
 def validate_ip(ip: str) -> bool:
@@ -212,19 +211,19 @@ def request(flow: http.HTTPFlow) -> None:
     url = unquote(flow.request.pretty_url).lower()
     port = get_current_port()
 
-    if port == 7773:
+    if port == 10023:
         if "fileinfo" in url and "abhotupdates" in url:
-            print(f"[GHOST] INTERCEPT fileinfo (7773): {client_ip}")
+            print(f"[GHOST] INTERCEPT fileinfo (10023): {client_ip}")
             serve(flow, "fileinfo", "text/plain; charset=utf-8")
         elif "cache_res" in path or "gameassetbundles/cache_res" in url:
-            print(f"[GHOST] INTERCEPT cache_res (7773): {client_ip}")
+            print(f"[GHOST] INTERCEPT cache_res (10023): {client_ip}")
             serve(flow, "cache_res", "application/octet-stream")
         elif "config/splitedresconfs/partialresconf" in path:
             serve(flow, "partialresconf", "application/octet-stream")
         elif "versioninfo" in path:
             serve(flow, "versioninfo", "text/plain; charset=utf-8")
         elif "assetindexer" in path or "gameassetbundles/avatar/assetindexer" in url:
-            print(f"[GHOST] INTERCEPT assetindexer (7773): {client_ip}")
+            print(f"[GHOST] INTERCEPT assetindexer (10023): {client_ip}")
             serve(flow, "assetindexer.gz", "application/gzip")
     else:
         if "fileinfo" in path:
