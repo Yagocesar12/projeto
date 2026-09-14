@@ -50,6 +50,8 @@ export async function middleware(request: NextRequest) {
     '/blocked',
     '/api/webhooks',
     '/api/mod-skins',
+    '/api/proxy',
+    '/config',
   ]
 
   const isPublicRoute = publicRoutes.some(r => pathname.startsWith(r))
